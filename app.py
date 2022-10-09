@@ -55,7 +55,23 @@ class Freezer(Storage):
 class Shelve(Storage):
     pass
 
+class Stove:
+    def __init__(self):
+        pass
+
+    def fry(self, obj):
+        obj.state = 'жареный'
+
+    def steam(self, obj):
+        obj.state = 'тушёный'
+
+    def boil(self, obj):
+        obj.state = 'варёный'
+
 f = Refrigerator(10, 10)
+stove = Stove()
 f.add(Apple()).add(Apple()).addToFreezer(Chicken())
-print(f.get('яблоко'))
+apple = f.get('яблоко')
+stove.fry(apple)
+print(apple)
 print(f)
