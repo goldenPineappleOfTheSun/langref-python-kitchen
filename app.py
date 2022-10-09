@@ -11,3 +11,7 @@ class Apple:
 
     def __print__(self):
         return '🍎'
+
+class Refrigerator:
+    def __init__(self):
+        self.items = []
