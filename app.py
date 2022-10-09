@@ -1,16 +1,19 @@
-class Chicken:
-    def __init__(self):
-        self.name = 'курица'
+class Food:
+    def __init__(self, name, state, emoji):
+        self.name = name
+        self.state = state
+        self.emoji = emoji
 
     def __str__(self):
-        return '🍗'
+        return f'{self.emoji}:{self.name}:{self.state}'
 
-class Apple:
+class Chicken(Food):
     def __init__(self):
-        self.name = 'яблоко'
+        super().__init__('курица', 'хороший', '🍗')
 
-    def __str__(self):
-        return '🍎'
+class Apple(Food):
+    def __init__(self):
+        super().__init__('яблоко', 'хороший', '🍎')
 
 class Storage:
     def __init__(self, capacity = 10):
@@ -30,7 +33,6 @@ class Storage:
 
     def __str__(self):
         return str([str(x) for x in self.items])
-
 
 class Refrigerator(Storage):
     def __init__(self, capacity, freezerCapacity):
