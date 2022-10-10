@@ -7,6 +7,10 @@ class Food:
     def __str__(self):
         return f'{self.emoji}:{self.name}:{self.state}'
 
+    def fry(self):
+        self.state = 'жареный'
+        return self
+
 class Chicken(Food):
     def __init__(self):
         super().__init__('курица', 'хороший', '🍗')
@@ -15,6 +19,13 @@ class Apple(Food):
     def __init__(self):
         super().__init__('яблоко', 'хороший', '🍎')
 
+class Omelete(Food):
+    def __init__(self):
+        super().__init__('яишница', 'хороший', '🍳')
+
+    def fry(self):
+        pass
+        
 class Storage:
     def __init__(self, capacity = 10):
         self.items = []
@@ -60,18 +71,19 @@ class Stove:
         pass
 
     def fry(self, obj):
-        obj.state = 'жареный'
+        return obj.fry()
 
     def steam(self, obj):
-        obj.state = 'тушёный'
+        return obj.steam()
 
     def boil(self, obj):
-        obj.state = 'варёный'
+        return obj.boil()
 
 f = Refrigerator(10, 10)
 stove = Stove()
 f.add(Apple()).add(Apple()).addToFreezer(Chicken())
 apple = f.get('яблоко')
 stove.fry(apple)
-print(apple)
-print(f)
+fe = Omelete()
+print(fe)
+print(stove.fry(fe))
