@@ -1,3 +1,7 @@
+book_of_receipts = {
+    'бутерброд': (('хлеб', 'хороший'), ('кура', 'хороший'))
+}
+
 class Food:
     def __init__(self, name, state, emoji):
         self.name = name
@@ -11,9 +15,13 @@ class Food:
         self.state = 'жареный'
         return self
 
+class Bread(Food):
+    def __init__(self):
+        super().__init__('хлеб', 'хороший', '🍞')
+
 class Chicken(Food):
     def __init__(self):
-        super().__init__('курица', 'хороший', '🍗')
+        super().__init__('кура', 'хороший', '🍗')
 
 class Apple(Food):
     def __init__(self):
@@ -79,11 +87,32 @@ class Stove:
     def boil(self, obj):
         return obj.boil()
 
+book_of_receipts = {
+    'бутерброд': (('хлеб', 'хороший'), ('кура', 'хороший'))
+}
+
+def mix(*arr):
+    arr = set(arr)
+    for k in book_of_receipts:
+        r = book_of_receipts[k]
+        match_count = 0
+        for a in r:
+            found = False
+            for b in arr:
+                if (b.name, b.state) == a:
+                    found = True
+            if found:
+                match_count += 1
+        if match_count == len(r):
+            return r
+    return None
+
 f = Refrigerator(10, 10)
 stove = Stove()
 f.add(Apple()).add(Apple()).addToFreezer(Chicken())
 apple = f.get('яблоко')
 stove.fry(apple)
 fe = Omelete()
-print(fe)
-print(stove.fry(fe))
+chicken = Chicken()
+bread = Bread()
+print(mix(chicken, bread))
