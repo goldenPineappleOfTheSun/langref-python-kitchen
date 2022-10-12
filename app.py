@@ -33,7 +33,11 @@ class Omelete(Food):
 
     def fry(self):
         pass
-        
+
+class Sandwich(Food):
+    def __init__(self):
+        super().__init__('бутерброд', 'хороший', '🥪')
+
 class Storage:
     def __init__(self, capacity = 10):
         self.items = []
@@ -87,8 +91,13 @@ class Stove:
     def boil(self, obj):
         return obj.boil()
 
+class Receipt:
+    def __init__(self, type, products):
+        self.type = type
+        self.products = products
+
 book_of_receipts = {
-    'бутерброд': (('хлеб', 'хороший'), ('кура', 'хороший'))
+    'бутерброд': Receipt(Sandwich, (('хлеб', 'хороший'), ('кура', 'хороший'))),
 }
 
 def mix(*arr):
@@ -96,15 +105,15 @@ def mix(*arr):
     for k in book_of_receipts:
         r = book_of_receipts[k]
         match_count = 0
-        for a in r:
+        for a in r.products:
             found = False
             for b in arr:
                 if (b.name, b.state) == a:
                     found = True
             if found:
                 match_count += 1
-        if match_count == len(r):
-            return r
+        if match_count == len(r.products):
+            return r.type()
     return None
 
 f = Refrigerator(10, 10)
