@@ -12,7 +12,25 @@ class Food:
         return f'{self.emoji}:{self.name}:{self.state}'
 
     def fry(self):
+        if self.state == 'использован!':
+            return self
         self.state = 'жареный'
+        return self
+
+    def boil(self):
+        if self.state == 'использован!':
+            return self
+        self.state = 'варёный'
+        return self
+
+    def steam(self):
+        if self.state == 'использован!':
+            return self
+        self.state = 'тушёный'
+        return self
+
+    def used(self):
+        self.state = 'использован!'
         return self
 
 class Bread(Food):
@@ -113,6 +131,8 @@ def mix(*arr):
             if found:
                 match_count += 1
         if match_count == len(r.products):
+            for item in arr:
+                item.used()
             return r.type()
     return None
 
@@ -125,3 +145,5 @@ fe = Omelete()
 chicken = Chicken()
 bread = Bread()
 print(mix(chicken, bread))
+print(mix(chicken, bread))
+print(chicken)
