@@ -1,5 +1,15 @@
+from enum import Enum
+
+class FoodStates(Enum):
+    good = 'хороший'
+    bad = 'испорченый'
+    used = '[использован!]'
+    fried = 'жареный'
+    boiled = 'варёный'
+    steamed = 'тушёный'
+
 book_of_receipts = {
-    'бутерброд': (('хлеб', 'хороший'), ('кура', 'хороший'))
+    'бутерброд': (('хлеб', FoodStates.good), ('кура', FoodStates.good))
 }
 
 class Food:
@@ -8,53 +18,54 @@ class Food:
         self.state = state
         self.emoji = emoji
 
+
     def __str__(self):
-        return f'{self.emoji}:{self.name}:{self.state}'
+        return f'{self.emoji}:{self.name}:{self.state.value}'
 
     def fry(self):
-        if self.state == 'использован!':
+        if self.state == FoodStates.used:
             return self
-        self.state = 'жареный'
+        self.state = FoodStates.fried
         return self
 
     def boil(self):
-        if self.state == 'использован!':
+        if self.state == FoodStates.used:
             return self
-        self.state = 'варёный'
+        self.state = FoodStates.boiled
         return self
 
     def steam(self):
-        if self.state == 'использован!':
+        if self.state == FoodStates.used:
             return self
-        self.state = 'тушёный'
+        self.state = FoodStates.steamed
         return self
 
     def used(self):
-        self.state = 'использован!'
+        self.state = FoodStates.used
         return self
 
 class Bread(Food):
     def __init__(self):
-        super().__init__('хлеб', 'хороший', '🍞')
+        super().__init__('хлеб', FoodStates.good, '🍞')
 
 class Chicken(Food):
     def __init__(self):
-        super().__init__('кура', 'хороший', '🍗')
+        super().__init__('кура', FoodStates.good, '🍗')
 
 class Apple(Food):
     def __init__(self):
-        super().__init__('яблоко', 'хороший', '🍎')
+        super().__init__('яблоко', FoodStates.good, '🍎')
 
 class Omelete(Food):
     def __init__(self):
-        super().__init__('яишница', 'хороший', '🍳')
+        super().__init__('яишница', FoodStates.good, '🍳')
 
     def fry(self):
         pass
 
 class Sandwich(Food):
     def __init__(self):
-        super().__init__('бутерброд', 'хороший', '🥪')
+        super().__init__('бутерброд', FoodStates.good, '🥪')
 
 class Storage:
     def __init__(self, capacity = 10):
@@ -126,7 +137,7 @@ def mix(*arr):
         for a in r.products:
             found = False
             for b in arr:
-                if (b.name, b.state) == a:
+                if (b.name, b.state.value) == a:
                     found = True
             if found:
                 match_count += 1
