@@ -1,4 +1,7 @@
 from enum import Enum
+import logging
+
+logging.basicConfig(filename='app.log', filemode='w', format='[%(asctime)s: %(levelname)s] %(message)s')
 
 class FoodStates(Enum):
     good = 'хороший'
@@ -24,18 +27,21 @@ class Food:
 
     def fry(self):
         if self.state == FoodStates.used:
+            logging.warning(f'Невозможно снова использовать: {self.name}')
             return self
         self.state = FoodStates.fried
         return self
 
     def boil(self):
         if self.state == FoodStates.used:
+            logging.warning(f'Невозможно снова использовать: {self.name}')
             return self
         self.state = FoodStates.boiled
         return self
 
     def steam(self):
         if self.state == FoodStates.used:
+            logging.warning(f'Невозможно снова использовать: {self.name}')
             return self
         self.state = FoodStates.steamed
         return self
@@ -158,3 +164,4 @@ bread = Bread()
 print(mix(chicken, bread))
 print(mix(chicken, bread))
 print(chicken)
+chicken.fry()
